@@ -6,6 +6,10 @@ import router from './routes';
 
 import mongoose from 'mongoose';
 
+import swaggerUi from 'swagger-ui-express';
+
+import {swaggerDocument} from './swagger';
+
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/myapp',{useNewUrlParser: true, useCreateIndex:true})
 .then(mongoose => console.log("Connected Successfully to Mongo Db"))
@@ -22,6 +26,7 @@ app.use(express.urlencoded({'extended': true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api',router);
+app.use('/api-docs',swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 
